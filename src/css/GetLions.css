@@ -1,0 +1,11 @@
+.GetLionsHeader{
+    flex-direction: column;
+    align-content: center;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.GetLionsHeader button{
+    width: 100px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+}
