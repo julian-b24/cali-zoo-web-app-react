@@ -1,8 +1,21 @@
 import { useState } from 'react';
 import '../css/CreateLionForm.css';
 
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+
 function CreateLionForm() {
 
+    //Upload messages types
+    const dialogTitleSuccessFully = 'Added';
+    const dialogTitleError = 'Error';
+    const successFullyMessage = 'Lion Added Successfully';
+
+    //Form fields
     const [name, setName] = useState('');
     const [sex, setSex] = useState('MALE');
     const [age, setAge] = useState(0);
@@ -12,38 +25,85 @@ function CreateLionForm() {
     const [fatherId, setFatherId] = useState('');
     const [motherId, setMotherId] = useState('');
 
+    //Messages
+    const [addedStatus, setAddedStatus] = useState('');
+    const [dialogTitle, setDialogTitle] = useState('');
+
+    //Dialog logic
+    const [open, setOpen] = useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     var sendLionForm = (e) => {
         e.preventDefault();
 
         let tempFatherId = fatherId
-        if(fatherId == ''){
+        if (fatherId === '') {
             setFatherId(null)
         }
 
         let tempMotherId = motherId
-        if(motherId == ''){
+        if (motherId === '') {
             setMotherId(null)
         }
 
         const lion = { name, sex, age, weight, height, arrivedZooDate, fatherId, motherId };
         setMotherId(tempMotherId)
         setFatherId(tempFatherId)
-        
+
         fetch('http://localhost:8080/african-lion', {
             method: 'POST',
-            headers: {"Content-Type": "application/json"},
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify(lion)
-        }).then((e) => {
-            console.log(e)
+        }).then(async res => {
+            const response = await res.json()
+            if (!response.ok) {
+                throw Error(response.message)
+            }
+            setAddedStatus(successFullyMessage)
+            setDialogTitle(dialogTitleSuccessFully)
+           handleClickOpen()
+        }).catch(error => {
+            setAddedStatus(error.message)
+            setDialogTitle(dialogTitleError)
+            handleClickOpen()
         })
     }
 
     return (
         <div className="CreateLionForm">
+            <div className='AlertDialog'>
+                <Dialog
+                    open={open}
+                    onClose={handleClose}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">
+                        {dialogTitle}
+                    </DialogTitle>
+                    <DialogContent>
+                        <DialogContentText id="alert-dialog-description">
+                            {addedStatus}
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={handleClose} autoFocus>
+                            Continue
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+            </div>
             <div className="col-md-4">
                 <div className="card">
                     <form className="card-body"
-                    onSubmit={sendLionForm}
+                        onSubmit={sendLionForm}
                     >
                         <div className="form-group">
                             <label>Name</label>
@@ -156,3 +216,5 @@ function CreateLionForm() {
 }
 
 export default CreateLionForm;
+
+//<AlertDialog message={addedStatus} messageType={dialogTitle} open={open}/>
