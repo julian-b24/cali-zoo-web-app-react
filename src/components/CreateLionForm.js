@@ -63,7 +63,7 @@ function CreateLionForm() {
             body: JSON.stringify(lion)
         }).then(async res => {
             const response = await res.json()
-            if (!response.ok) {
+            if (response.id === undefined) {
                 throw Error(response.message)
             }
             setAddedStatus(successFullyMessage)

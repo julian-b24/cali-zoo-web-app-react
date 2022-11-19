@@ -40,7 +40,7 @@ function GetLion() {
             headers: { "Content-Type": "application/json" }
         }).then(async res => {
             const response = await res.json();
-            if (!response.ok) {
+            if (response.requestedLion === undefined) {
                 throw Error(response.message)
             }
             return response
