@@ -6,21 +6,23 @@ import CreateLion from './CreateLion';
 import GetLion from './GetLion';
 import GetLions from './GetLions'
 
+import '../css/APITabPane.css';
+
 function APITabPane(){
     return(
         <div className="APITabPane">
             <Tabs
                 defaultActiveKey="profile"
                 id="uncontrolled-tab-example"
-                className="mb-3"
+                className="Tabs mb-3"
               >
-                <Tab eventKey="createLion" title="Create">
+                <Tab className='Tab' eventKey="createLion" title="Create">
                   <CreateLion/>
                 </Tab>
-                <Tab eventKey="getLion" title="Get Lion">
+                <Tab className='Tab' eventKey="getLion" title="Get Lion">
                   <GetLion/>
                 </Tab>
-                <Tab eventKey="getLions" title="Get Lions">
+                <Tab className='Tab' eventKey="getLions" title="Get Lions">
                   <GetLions/>
                 </Tab>
             </Tabs>

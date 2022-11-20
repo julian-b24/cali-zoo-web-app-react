@@ -22,6 +22,7 @@ function GetLion() {
     const [message, setMessage] = useState('')
     const [dialogTitle, setDialogTitle] = useState('')
     const dialogTitleError = 'Error'
+    const emptyFieldError = 'Empty field';
 
     //Dialog logic
     const [open, setOpen] = useState(false);
@@ -39,10 +40,17 @@ function GetLion() {
             method: 'GET',
             headers: { "Content-Type": "application/json" }
         }).then(async res => {
+
+            if(lionName === ''){
+                throw Error(emptyFieldError)
+            }
+
             const response = await res.json();
+
             if (response.requestedLion === undefined) {
                 throw Error(response.message)
             }
+
             return response
         }).then(data => {
             const lion = data
@@ -93,6 +101,7 @@ function GetLion() {
                             name="lionName"
                             className="form-control"
                             placeholder="Lion's Name"
+                            required
                             onChange={(e) => { setLionName(e.target.value) }}
                         />
                     </div>

@@ -125,7 +125,7 @@ function CreateLionForm() {
                                 value={sex}
                                 onChange={(e) => setSex(e.target.value)}
                             >
-                                <option selected value="MALE">MALE</option>
+                                <option defaultValue value="MALE">MALE</option>
                                 <option value="FEMALE">FEMALE</option>
                             </select>
                         </div>
@@ -175,7 +175,7 @@ function CreateLionForm() {
                                 type="text"
                                 name="lionArrivedZooDate"
                                 className="form-control"
-                                placeholder="Arrived Zoo Date"
+                                placeholder="yyyy-MM-dd HH:mm:ss"
                                 required
                                 value={arrivedZooDate}
                                 onChange={(e) => { setArrivedZooDate(e.target.value) }}

@@ -17,8 +17,9 @@ function GetLions(){
             return data
         }).then(data => {
             setLions(data)
-            if(data == null){
-                setRequestState('No Lions registered in data base')
+            if(lions.length == 0){
+                console.log('Hey')
+                setRequestState('No Lions registered in database')
             }
         })
     }
@@ -35,8 +36,8 @@ function GetLions(){
             </div>
             <div className="GetLionsBody">
                 <div className='row'>
-                    {lions && <LionsList lions={lions}/>}
-                    {!lions && <p>{requestState}</p>}
+                    {lions && lions.length != 0 && <LionsList lions={lions}/>}
+                    {lions && lions.length == 0 && <p>{requestState}</p>}
                 </div>
             </div>
         </div>
